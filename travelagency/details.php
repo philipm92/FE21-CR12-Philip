@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'components/db_connect.php';
+require_once 'components/RESTful.php';
 $TABLE = $_SESSION["TABLE"];
 if ($_GET['id']) {
     $id = $_GET['id'];
@@ -14,11 +15,27 @@ if ($_GET['id']) {
         $longitude = $data['longitude']; 
         $latitude = $data['latitude']; 
         $picture = $data["picture"];
-        echo $latitude." ".$longitude." ";
+
+        // get weather data
+        $city = "$latitude,$longitude";
+        $url = 'https://api.darksky.net/forecast/e329256a741df2bcccffedd3600287c2/' . $city . '?exclude=minutely,hourly,daily,alerts,flags';
+        $result = curl_get($url);
+        $weather = json_decode($result); //it turns the json into an object
+        $fahrenheit= $weather->currently->temperature; //fetch the value from the temperature option
+        $celsius = round(($fahrenheit - 32) * (5 / 9), 2); //convert fahrenheit into celsius
+        $weather_output = "
+        <div class='card text-center text-dark bg-lighty'>
+            <p class='card-title h5'>Weather: {$weather->timezone} </p>
+            <div class='card-body'>
+                <p class='card-text'> {$weather->currently->summary} </p>
+                <p class='card-text'>{$celsius}&deg;C <strong><em>/</em></strong> {$fahrenheit}&deg;F</p>
+            </div>
+        </div>";
 
     } else {
         header("location: error.php");
     }
+
     $db->close();
 } else {
     header("location: error.php");
@@ -41,7 +58,8 @@ if ($_GET['id']) {
             }
 
             #map {
-                height: 90%;
+                height: 50%;
+                width: 50%;
             }
         </style>         
     </head>
@@ -74,8 +92,10 @@ if ($_GET['id']) {
             <a href= "index.php"><button class="btn btn-warning text-center" type="button"><< Go Back</button></a>
 
     </fieldset>
-    <div id="map" class="mx-auto my-2"></div>
-
+    <div id="map" class="mx-auto my-4"></div>
+    <div class="mx-0 p-0 container mx-auto my-4 w-50">
+        <?= $weather_output ?>
+    </div>
 
     <?php require_once 'components/footer.php'?>
     
@@ -85,8 +105,9 @@ if ($_GET['id']) {
             var map;
             function initMap() {
                 var var_location = {lat: <?php echo $latitude ?>, lng: <?php echo $longitude ?>};
-                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 8});
-                var pinpoint = new google.maps.Marker({position: var_location,map: map});
+                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 18});
+                var pinpoint = new google.maps.Marker({position: var_location,map: map, title:"<?php echo $location_name ?>"});
+                //console.log(map.setCenter(var_location));
             }
     </script>  
 
