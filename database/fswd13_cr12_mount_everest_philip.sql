@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2021 at 11:31 AM
+-- Generation Time: Aug 27, 2021 at 03:13 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -44,10 +44,10 @@ CREATE TABLE `travel` (
 --
 
 INSERT INTO `travel` (`id`, `picture`, `location_name`, `price`, `description`, `longitude`, `latitude`) VALUES
-(1, 'ANiNite21_new.jpg', 'AniNite 2021', '25.00', 'Bei der größten, schönsten und besten Anime- und Manga-Convention Österreichs!*\r\nNach einer furchtbaren gefühlt endlosen Pause freut sich das gesamte AniNite-Team dich endlich wieder begrüßen zu dürfen!', 48.1134, 16.3126),
-(2, 'Area52_new.jpg', 'Area 52', '12.00', 'Die Area52 ist Österreichs größte Gaming Lounge und befindet sich im Herzen des 21. Wiener Gemeindebezirks. Nur 5 Gehminuten vom Bahnhof Floridsdorf entfernt kannst du einen ganzen Tag lang in die Welt der Videospiele eintauchen.', 48.2549, 16.4011),
-(3, 'stephansdom.JPG', 'St. Stephen\'s Cathedral', '0.00', 'St. Stephen\'s Cathedral (more commonly known by its German title: Stephansdom) is the mother church of the Roman Catholic Archdiocese of Vienna and the seat of the Archbishop of Vienna, Christoph Cardinal Schönborn, OP.', 48.2086, 16.3735),
-(4, 'travel_chicago_america_new.jpg', 'The Buckingham Hotel', '1432.00', 'Redefine your expectations of the hotel experience with The Buckingham Hotel. Our spacious rooms are tucked away on the 40th floor of the Chicago Stock Exchange Building and offer unparalleled views of the skyline and bustling cityscape. Watch the sunrise over the lake through our picturesque windows.', 41.8762, -87.6318);
+(1, 'ANiNite21_new.jpg', 'AniNite 2021', '25.00', 'Bei der größten, schönsten und besten Anime- und Manga-Convention Österreichs!*\r\nNach einer furchtbaren gefühlt endlosen Pause freut sich das gesamte AniNite-Team dich endlich wieder begrüßen zu dürfen!', 16.3126, 48.1134),
+(2, 'Area52_new.jpg', 'Area 52', '12.00', 'Die Area52 ist Österreichs größte Gaming Lounge und befindet sich im Herzen des 21. Wiener Gemeindebezirks. Nur 5 Gehminuten vom Bahnhof Floridsdorf entfernt kannst du einen ganzen Tag lang in die Welt der Videospiele eintauchen.', 16.4011, 48.2549),
+(3, 'stephansdom.JPG', 'St. Stephen\'s Cathedral', '0.00', 'St. Stephen\'s Cathedral (more commonly known by its German title: Stephansdom) is the mother church of the Roman Catholic Archdiocese of Vienna and the seat of the Archbishop of Vienna, Christoph Cardinal Schönborn, OP.', 16.3735, 48.2086),
+(4, 'travel_chicago_america_new.jpg', 'The Buckingham Hotel', '1432.00', 'Redefine your expectations of the hotel experience with The Buckingham Hotel. Our spacious rooms are tucked away on the 40th floor of the Chicago Stock Exchange Building and offer unparalleled views of the skyline and bustling cityscape. Watch the sunrise over the lake through our picturesque windows.', -87.6318, 41.8762);
 
 --
 -- Indexes for dumped tables
