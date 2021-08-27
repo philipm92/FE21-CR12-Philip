@@ -1,0 +1,40 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset {
+  margin: auto;
+  margin-top: 1rem;
+  width: 75%;
+}
+
+.manageTravel {
+  margin: auto;
+}
+
+.img-thumbnail {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+td img {
+  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+tr {
+  text-align: center;
+}
+/*# sourceMappingURL=style.css.map */
