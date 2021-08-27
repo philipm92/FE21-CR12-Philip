@@ -3,6 +3,7 @@ session_start();
 require_once '../components/db_connect.php';
 require_once 'file_upload.php';
 $TABLE = $_SESSION["TABLE"];
+header("refresh:5; location: ../index.php");
 
 if ($_POST) {  
     $id = $_POST['id'];
@@ -52,10 +53,23 @@ if ($_POST) {
         <div class="alert alert-<?php echo $class;?>" role="alert">
             <p><?php echo ($message) ?? ''; ?></p>
             <p><?php echo ($uploadError) ?? ''; ?></p>
+            <p>You will be redirected to "home" in <strong><span id="counter">3</span></strong> second(s).</p>
             <a href='../update.php?id=<?=$id;?>'><button class="btn btn-warning" type='button'>Back</button></a>
-            <a href='../index.php'><button class="btn btn-success" type='button'>Home</button></a>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function countdown() {
+            var i = document.getElementById('counter');
+            if (parseInt(i.innerHTML)<=0) {
+                location.href = '../index.php';  // header of php not required
+            }
+        if (parseInt(i.innerHTML)!=0) {
+            i.innerHTML = parseInt(i.innerHTML)-1;
+        }
+        }
+        setInterval(function(){ countdown(); },1000);
+    </script>    
     <!-- Keep Footer down! -->
     <?php require_once '../components/footer.php' ?>
     <!-- Bootstrap JS -->

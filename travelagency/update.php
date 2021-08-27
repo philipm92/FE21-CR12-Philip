@@ -32,6 +32,7 @@ if ($_GET['id']) {
         <link href="components/style.css" rel="stylesheet" type="text/css">
     </head>
 <body class="d-flex flex-column min-vh-100 bg-white"> <!-- Soome stuff for footer handling-->
+    <?php require_once "components/navbar.php" ?>
     <fieldset>
         <div class="d-flex flex-column justify-content-center align-items-center">
             <h2 class="text-center">Update request</h2>
@@ -63,14 +64,14 @@ if ($_GET['id']) {
 
                         <tr>
                             <div class="form-floating mb-3">
-                                <input type="number" name="latitude" class="form-control" id="floatingLat" placeholder="Latitude" value="<?php echo $latitude ?>" />
+                                <input type="text" name="latitude" class="form-control" id="floatingLat" placeholder="Latitude" value="<?php echo $latitude ?>" />
                                 <label for="floatingLat">Latitude</label>
                             </div>
                         </tr>
 
                         <tr>
                             <div class="form-floating mb-3">
-                                <input type="number" name="longitude" class="form-control" id="floatingLong" placeholder="Longitude" value="<?php echo $longitude ?>" />
+                                <input type="text" name="longitude" class="form-control" id="floatingLong" placeholder="Longitude" value="<?php echo $longitude ?>" />
                                 <label for="floatingLong">Longitude</label>
                             </div>
                         </tr>
@@ -82,11 +83,10 @@ if ($_GET['id']) {
                         <tr>
                             <input type= "hidden" name= "id" value = "<?php echo $data['id'] ?>" />
                             <input type= "hidden" name= "picture" value = "<?php echo $data['picture'] ?>" />
-                            <td><a href= "index.php"><button class="btn btn-warning" type="button"><< Go Back</button></a></td>
-                            <td><button class="btn btn-success" type= "submit">Save Changes</button></td>
                         </tr>
                     </table>
                 </div>
+                <div class="text-center"><button class="btn btn-success" type= "submit">Save Changes</button></div>
             </form>
     </fieldset>
 

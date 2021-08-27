@@ -53,10 +53,12 @@ $db->close();
         <link href="components/style.css" rel="stylesheet" type= "text/css">
     </head>
 <body class="d-flex flex-column min-vh-100 bg-white"> <!-- Soome stuff for footer handling-->
-    <div class="managaTravel my-2 my-md-4">    
+    <?php require_once "components/navbar.php" ?>
+
+    <div class="managaTravel my-1 my-md-2">    
         <div class='d-flex flex-column justify-content-center align-items-center flex-md-row justify-content-md-evenly'>
             <a href= "create.php"><button class='btn btn-primary my-2' type="button" >Add new location</button></a>
-            <a href= "apidata.php"><button class='btn btn-primary my-2' type="button" >Show API</button></a>
+            <a href= "apidata.php?id=ALL"><button class='btn btn-primary my-2' type="button" >Show API</button></a>
         </div>
         <h2 class="text-center mt-3 mt-md-4 mb-2 mb-mb-3">Travel Location</h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-lg-2 w-75 mx-auto">

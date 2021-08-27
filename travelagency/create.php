@@ -8,6 +8,7 @@
     <link href="components/style.css" rel="stylesheet" type= "text/css">
 </head>
 <body class="d-flex flex-column min-vh-100 bg-white">
+    <?php require_once "components/navbar.php" ?>
     <fieldset>
         <h2 class="text-center">Add Location</h2>
         <form action="actions/a_create.php" method= "post" enctype="multipart/form-data">
@@ -37,29 +38,23 @@
 
                     <tr>
                         <div class="form-floating mb-3">
-                            <input type="number" name="latitude" class="form-control" id="floatingLat" placeholder="Latitude">
+                            <input type="text" name="latitude" class="form-control" id="floatingLat" placeholder="Latitude">
                             <label for="floatingLat">Latitude</label>
                         </div>
                     </tr>
 
                     <tr>
                         <div class="form-floating mb-3">
-                            <input type="number" name="longitude" class="form-control" id="floatingLong" placeholder="Longitude">
+                            <input type="text" name="longitude" class="form-control" id="floatingLong" placeholder="Longitude">
                             <label for="floatingLong">Longitude</label>
                         </div>
                     </tr>
 
                     <tr>
-                        <div class="form-floating">
-                            <input class='form-control' type="file" name="image" id="floatingImg" />
-                            <!-- <label for="floatingImg">upload image</label> -->
-                        </div>
-                    </tr>
-                    <tr>
-                        <td><a href="index.php"><button class='btn btn-warning' type="button"><< Home</button></a></td>
-                        <td><button class='btn btn-success' type="submit">Insert Media</button></td>   
+                        <input class='form-control' type="file" name="image" id="floatingImg" />
                     </tr>
                 </table>
+                <div class="text-center"><button class='btn btn-success' type="submit">Insert Media</button></div>   
             </div>
         </form>
     </fieldset>

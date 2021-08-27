@@ -52,9 +52,24 @@ if ($_POST) {
         <div class="alert alert-<?=$class;?>" role="alert">
             <p><?php echo ($message) ?? ''; ?></p>
             <p><?php echo ($uploadError) ?? ''; ?></p>
-            <a href='../index.php'><button class="btn btn-primary" type='button'>Home</button></a>
+            <p>You will be redirected to "home" in <strong><span id="counter">3</span></strong> second(s).</p>
+            <!-- <a href='../index.php'><button class="btn btn-primary" type='button'>Home</button></a> -->
         </div>
     </div>
+
+    
+    <script type="text/javascript">
+        function countdown() {
+            var i = document.getElementById('counter');
+            if (parseInt(i.innerHTML)<=0) {
+                location.href = '../index.php'; // header of php not required
+            }
+        if (parseInt(i.innerHTML)!=0) {
+            i.innerHTML = parseInt(i.innerHTML)-1;
+        }
+        }
+        setInterval(function(){ countdown(); },1000);
+    </script>
 
     <?php require_once '../components/footer.php'?>
     <?php require_once '../components/bootjs.php'?>

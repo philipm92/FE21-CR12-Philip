@@ -16,22 +16,6 @@ if ($_GET['id']) {
         $latitude = $data['latitude']; 
         $picture = $data["picture"];
 
-        // get weather data
-        $city = "$latitude,$longitude";
-        $url = 'https://api.darksky.net/forecast/e329256a741df2bcccffedd3600287c2/' . $city . '?exclude=minutely,hourly,daily,alerts,flags';
-        $result = curl_get($url);
-        $weather = json_decode($result); //it turns the json into an object
-        $fahrenheit= $weather->currently->temperature; //fetch the value from the temperature option
-        $celsius = round(($fahrenheit - 32) * (5 / 9), 2); //convert fahrenheit into celsius
-        $weather_output = "
-        <div class='card text-center text-dark bg-lighty'>
-            <p class='card-title h5'>Weather: {$weather->timezone} </p>
-            <div class='card-body'>
-                <p class='card-text'> {$weather->currently->summary} </p>
-                <p class='card-text'>{$celsius}&deg;C <strong><em>/</em></strong> {$fahrenheit}&deg;F</p>
-            </div>
-        </div>";
-
     } else {
         header("location: error.php");
     }
@@ -59,12 +43,13 @@ if ($_GET['id']) {
 
             #map {
                 width: 75vw;
-                height: 100%;
+                height: 50%;
             }
         </style>         
     </head>
 
-<body class="d-flex flex-column min-vh-100 bg-white">
+<body class="min-vh-100 bg-white">
+    <?php require_once "components/navbar.php" ?>
     <fieldset class="mt-2 mb-3">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <h2 class="text-center">Show "<?php echo $location_name ?>" Data</h2>
@@ -99,23 +84,46 @@ if ($_GET['id']) {
                 </table>
 
             </div>
-            <a href= "index.php"><button class="btn btn-warning text-center" type="button"><< Go Back</button></a>
-
+            
     </fieldset>
     <div id="map" class="mx-auto my-2"></div>
-    <div class="mx-0 p-0 container mx-auto my-4 w-50">
-        <?= $weather_output ?>
+    <div class="mx-auto p-0 container mx-auto my-4 w-50">
+        <div class="text-center">
+            <button type="button" class="btn btn-primary mt-2 mb-4" id="weatherBtn">Show Weather</button>
+            <div id="weatherCard"></div>
+            </div>
     </div>
 
     <?php require_once 'components/footer.php'?>
     
     <?php require_once 'components/bootjs.php'?>
+
+    <script>
+        document.getElementById("weatherBtn").addEventListener("click", loadData);
+        function loadData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                if (this.status == 200) {
+                    console.log(this.responseText);
+                    if (this.status == 200) document.getElementById("weatherCard").innerHTML = this.responseText;
+                    //const weather = JSON.parse(this.responseText);
+                    //document.getElementById('content').innerHTML = `${weather.car_name} ${weather.price}`;
+                }
+            }
+            let weather_url = "external_weather.php?lat=" + <?php echo $latitude ?> + "&long=" + <?php echo $longitude ?>;
+            // console.log(weather_url);
+            xhttp.open("GET", weather_url, true);
+            xhttp.send();
+        }
+        
+    </script>
+
     <!-- MAPS PART -->
     <script>
             var map;
             function initMap() {
                 var var_location = {lat: <?php echo $latitude ?>, lng: <?php echo $longitude ?>};
-                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 12});
+                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 16});
                 var pinpoint = new google.maps.Marker({position: var_location,map: map, title:"<?php echo $location_name ?>"});
                 //console.log(map.setCenter(var_location));
             }
