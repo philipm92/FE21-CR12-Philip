@@ -4,40 +4,15 @@ $_SESSION["TABLE"] = "travel";
 $TABLE = $_SESSION["TABLE"];
 require_once 'components/db_connect.php';
 
-// function CreateHTMLTable($query_data, $thead_string_addon = '', $tbody_string_addon = '') {
-//     $table = new stdClass();
-//     $table->thead = "<tr>";
-//     $table->tbody = "<tr>";
-//     if (count($query_data) == 0) {
-//         debug_to_console("param '\$query_data' cannot be empty");
-//         $table->thead .= $thead_string_addon."</tr>";
-//         $table->tbody .= $tbody_string_addon."</tr>";
-//         return $table;
-//     }
-//     foreach ($query_data->head as $head_value) $table->thead .= "<th>$head_value</th>";
-//     $table->thead .= $thead_string_addon."</tr>";
-//     foreach ($query_data->body as $col) {
-//         foreach ($col as $row) {
-//             foreach ($row as $key => $val) $table->tbody .= "<td>$val</td>";
-//         }
-//     }
-//     $table->tbody .= $tbody_string_addon."</tr>";
-//     return $table;
-// }
-
 $sql = "SELECT * FROM `$TABLE`;";
 $result = $db->query($sql);
 $n = $result->numRows();
 $rows = $result->fetchAll();
-$query_data = GetQueryData($rows);
+$query_data = GetQueryData($rows); // testing new function, though not really necessary
 
-// create table head
-// $data_head = $query_data->head;
-// $thead_string = "<tr>";
-// foreach($data_head as $head_value) $thead_string .= "<th>$head_value</th>";
-// $thead_string .= "<th>Change</th>";
 
-$cards_string = ''; //this variable will hold the body for the table
+
+$cards_string = ''; //this variable will hold the data for the cards
 $data_body = $query_data->body;
 if($n  > 0) {
     $card = '';
@@ -84,7 +59,6 @@ $db->close();
             <a href= "apidata.php"><button class='btn btn-primary my-2' type="button" >Show API</button></a>
         </div>
         <h2 class="text-center mt-3 mt-md-4 mb-2 mb-mb-3">Travel Location</h2>
-           <!-- START BLOG GRID -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-lg-2 w-75 mx-auto">
             <?= $cards_string ?>
         </div>

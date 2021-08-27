@@ -1,39 +1,20 @@
 <?php
+session_start();
 require_once 'components/db_connect.php';
+$TABLE = $_SESSION["TABLE"];
 
-if ($_GET['ISBN']) {
-    $ISBN = $_GET['ISBN'];
-    $sql = "SELECT * FROM library WHERE ISBN = ?";
-    $result = $db->query($sql, $ISBN);
-    $html_status_string = ""; // collect correct status as active
-    $html_type_string = ""; // collect correct type as active
-    // maybe could've gotten keys from overall table elements' column?
-    $status_array = ["available", "reserved"];
-    $type_array = ["Book", "CD", "DVD"]; 
+if ($_GET['id']) {
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM `$TABLE` WHERE id = ?";
+    $result = $db->query($sql, $id);
     if ($result->numRows() == 1) {
-        // image, title, type, short_description as 'description', publish_date as 'published', publisher_name AS 'publisher', publisher_address AS 'address'
         $data = $result->fetchArray();
-        $title = $data['title'];
-        $type = $data['type'];
-        $status = $data['status'];
-        $description = $data['short_description'];
-        $published = $data['publish_date'];
-        $publisher = $data['publisher_name']; 
-        $publisher_address = $data['publisher_address']; 
-        $picture = $data['image'];
-        $author_firstname = $data['author_first_name'];
-        $author_lastname = $data['author_last_name'];
-        # is there a better way????
-        foreach($status_array as $value) {
-            $isChecked = ($value == $status) ? "checked" : "";
-            $html_status_string .= "<label>".ucfirst($value)."</label> <input type='radio' name='status' value='".$value."' ".$isChecked." /> ";
-        }
-        
-        foreach ($type_array as $value) {
-            $isSelected = ($value == $type) ? "selected" : "";
-            $html_type_string .= "<option value='".$value."' ".$isSelected.">".$value."</option>";
-        }
-
+        $location_name = $data['location_name'];
+        $description = $data['description'];
+        $price = $data['price'];
+        $latitude = $data['latitude'];
+        $longitude = $data['longitude'];
+        $picture = $data['picture'];
     } else {
         header("location: error.php");
     }
@@ -46,88 +27,72 @@ if ($_GET['ISBN']) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Edit Media</title>
-        <?php require_once 'components/boot.php'?>
+        <title>Edit <?php echo $location_name ?></title>
+        <?php require_once 'components/bootcss.php'?>
         <link href="components/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
-        <fieldset>
-            <div class="d-flex flex-column justify-content-center align-items-center">
-                <h2 class="text-center">Update request</h2>
-                <img class='img-fluid img-thumbnail m-2' src='pictures/<?php echo $picture ?>' alt="<?php echo $title ?>">
-            </div>
+<body class="d-flex flex-column min-vh-100 bg-white"> <!-- Soome stuff for footer handling-->
+    <fieldset>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h2 class="text-center">Update request</h2>
+            <img class='img-fluid img-thumbnail m-2' src='pictures/<?php echo $picture ?>' alt="<?php echo $location_name ?>">
+        </div>
             <form action="actions/a_update.php"  method="post" enctype="multipart/form-data">
                 <div class="table-responsive mx-auto w-75">
                     <table class='table table-hover table-striped mx-auto'>
                         <tr>
-                            <th>ISBN</th>
-                            <td><input class="form-control" type="text" name="ISBN" placeholder="ISBN" value="<?php echo $ISBN ?>" /></td>
-                        </tr> 
-                        
-                        <tr>
-                            <th>Title</th>
-                            <td><input class="form-control" type="text" name="title" placeholder="Media Title" value="<?php echo $title ?>" /></td>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="location_name" class="form-control" id="floatingLName" placeholder="Location Name" value="<?php echo $location_name ?>" />
+                                <label for="floatingLName">Location Name</label>
+                            </div>
                         </tr> 
 
                         <tr>
-                            <th>Type</th>
-                            <td style="text-align:left;">
-                                <select name="type">
-                                    <?php echo $html_type_string ?>
-                                </select>
-                            </td>
-                        </tr> 
-
-                        <tr>
-                            <th>Description</th>
-                            <td><input class="form-control" type="text" name="short_description" placeholder="Short description" value="<?php echo $description ?>" /></td>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="description" class="form-control" id="floatingDesc" placeholder="Description" value="<?php echo $description ?>" />
+                                <label for="floatingDesc">Description</label>
+                            </div>
                         </tr>
 
                         <tr>
-                            <th>Author first name</th>
-                            <td><input class="form-control" type="text" name="author_first_name" placeholder="Author first name" value="<?php echo $author_firstname ?>" /></td>
-                        </tr> 
-
-                        <tr>
-                            <th>Author last name</th>
-                            <td><input class="form-control" type="text" name="author_last_name" placeholder="Author last name" value="<?php echo $author_lastname ?>" /></td>
-                        </tr> 
-
-                        <tr>
-                            <th>Publish Date</th>
-                            <td><input class="form-control" type="date" name="publish_date" placeholder="Publish date" value="<?php echo $published ?>" /></td>
-                        </tr> 
-
-                        <tr>
-                            <th>Publisher</th>
-                            <td><input class="form-control" type="text" name="publisher_name" placeholder="Publisher name" value="<?php echo $publisher ?>" /></td>
-                        </tr> 
-
-                        <tr>
-                            <th>Publisher Address</th>
-                            <td><input class="form-control" type="text" name="publisher_address" placeholder="Publisher address" value="<?php echo $publisher_address ?>" /></td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Availability</th>
-                            <td style="text-align:left;">
-                                <?php echo $html_status_string; ?>
-                            </td>
+                            <div class="form-floating mb-3">
+                                <input type="number" step="1" name="price" class="form-control" id="floatingPrice" placeholder="Price" value="<?php echo $price ?>" />
+                                <label for="floatingPrice">Price</label>
+                            </div>
                         </tr>
 
                         <tr>
-                            <th>Picture</th>
-                            <td><input class="form-control" type="file" name= "image" /></td>
+                            <div class="form-floating mb-3">
+                                <input type="number" name="latitude" class="form-control" id="floatingLat" placeholder="Latitude" value="<?php echo $latitude ?>" />
+                                <label for="floatingLat">Latitude</label>
+                            </div>
                         </tr>
+
                         <tr>
-                            <input type= "hidden" name= "ISBN" value = "<?php echo $data['ISBN'] ?>" />
-                            <input type= "hidden" name= "image" value = "<?php echo $data['image'] ?>" />
+                            <div class="form-floating mb-3">
+                                <input type="number" name="longitude" class="form-control" id="floatingLong" placeholder="Longitude" value="<?php echo $longitude ?>" />
+                                <label for="floatingLong">Longitude</label>
+                            </div>
+                        </tr>
+
+                        <tr>
+                            <input class='form-control' type="file" name="picture" />
+                        </tr>
+
+                        <tr>
+                            <input type= "hidden" name= "id" value = "<?php echo $data['id'] ?>" />
+                            <input type= "hidden" name= "picture" value = "<?php echo $data['picture'] ?>" />
                             <td><a href= "index.php"><button class="btn btn-warning" type="button"><< Go Back</button></a></td>
                             <td><button class="btn btn-success" type= "submit">Save Changes</button></td>
                         </tr>
                     </table>
                 </div>
             </form>
-        </fieldset>
-    </body>
+    </fieldset>
+
+    <!-- Keep Footer down! -->
+    <?php require_once 'components/footer.php' ?>
+    <!-- Bootstrap JS -->
+    <?php require_once 'components/bootjs.php'?>
+</body>
 </html>

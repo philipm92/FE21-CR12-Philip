@@ -45,7 +45,7 @@ if ($_GET['id']) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Show Media Data</title>
+        <title>Show "<?php echo $location_name ?>" Data</title>
         <?php require_once 'components/bootcss.php'?>
         <link href="components/style.css" rel="stylesheet" type="text/css">
         <style>
@@ -58,13 +58,13 @@ if ($_GET['id']) {
             }
 
             #map {
-                height: 50%;
-                width: 50%;
+                width: 75vw;
+                height: 100%;
             }
         </style>         
     </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100 bg-white">
     <fieldset class="mt-2 mb-3">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <h2 class="text-center">Show "<?php echo $location_name ?>" Data</h2>
@@ -86,13 +86,23 @@ if ($_GET['id']) {
                         <th>Price</th>
                         <td><?php echo $price ?>&euro;</td>
                     </tr>
+                    
+                    <tr>
+                        <th>Latitude</th>
+                        <td><?php echo $latitude ?></td>
+                    </tr>
+
+                    <tr>
+                        <th>Longitude</th>
+                        <td><?php echo $longitude ?></td>
+                    </tr>                                       
                 </table>
 
             </div>
             <a href= "index.php"><button class="btn btn-warning text-center" type="button"><< Go Back</button></a>
 
     </fieldset>
-    <div id="map" class="mx-auto my-4"></div>
+    <div id="map" class="mx-auto my-2"></div>
     <div class="mx-0 p-0 container mx-auto my-4 w-50">
         <?= $weather_output ?>
     </div>
@@ -105,7 +115,7 @@ if ($_GET['id']) {
             var map;
             function initMap() {
                 var var_location = {lat: <?php echo $latitude ?>, lng: <?php echo $longitude ?>};
-                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 18});
+                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 12});
                 var pinpoint = new google.maps.Marker({position: var_location,map: map, title:"<?php echo $location_name ?>"});
                 //console.log(map.setCenter(var_location));
             }

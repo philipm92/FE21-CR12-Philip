@@ -1,29 +1,27 @@
 <?php
+session_start();
 require_once '../components/db_connect.php';
 require_once 'file_upload.php';
+$TABLE = $_SESSION["TABLE"];
 
-if ($_POST) {    
-    $ISBN = $_POST['ISBN'];
-    $title = $_POST['title'];
-    $type = $_POST['type'];
-    $status = $_POST['status'];
-    $description = $_POST['short_description'];
-    $published = $_POST['publish_date'];
-    $publisher = $_POST['publisher_name']; 
-    $publisher_address = $_POST['publisher_address']; 
-    $author_firstname = $_POST['author_first_name'];
-    $author_lastname = $_POST['author_last_name'];    
+if ($_POST) {  
+    $id = $_POST['id'];
+    $location_name = $_POST['location_name'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
     //variable for upload pictures errors is initialized
     $uploadError = '';
-    $picture = file_upload($_FILES['image']); //file_upload() called  
-
+    $picture = file_upload($_FILES['picture']); //file_upload() called  
+    # $picture->fileName
     if($picture->error===0){
-        ($_POST["image"]=="default_image.png") ?: unlink("../pictures/$_POST[image]");
-        $sql = "UPDATE `library` SET `ISBN`=?,`title`=?,`type`=?,`short_description`=?, `author_first_name`=?,`author_last_name`=?,`publisher_name`=?, `publisher_address`=?,`publish_date`=?,`status`=?,`image`=? WHERE `ISBN`=?;";
-        $params = [$ISBN,$title,$type,$description,$author_firstname,$author_lastname,$publisher,$publisher_address,$published,$status,$picture->fileName, $ISBN];
+        ($_POST["picture"]=="default_image.png") ?: unlink("../pictures/$_POST[picture]");
+        $sql = "UPDATE `$TABLE` SET `picture`=?, `location_name`=?, `price`=?, `description`=?, `longitude`=?, `latitude`=? WHERE `id` = ?";
+        $params = [$picture->fileName, $location_name, $price, $description, $longitude, $latitude, $id];
     } else {
-        $sql = "UPDATE `library` SET `ISBN`=?,`title`=?,`type`=?,`short_description`=?, `author_first_name`=?,`author_last_name`=?,`publisher_name`=?, `publisher_address`=?,`publish_date`=?,`status`=? WHERE `ISBN`=?;";
-        $params = [$ISBN,$title,$type,$description,$author_firstname,$author_lastname,$publisher,$publisher_address,$published,$status,$ISBN];
+        $sql = "UPDATE `$TABLE` SET `location_name`=?, `price`=?,`description`=?, `longitude`=?, `latitude`=? WHERE `id` = ?";
+        $params = [$location_name, $price, $description, $longitude, $latitude, $id];
     }
     $db->query($sql, $params);
     
@@ -43,19 +41,24 @@ if ($_POST) {
     <head>
         <meta charset="UTF-8">
         <title>Update</title>
-        <?php require_once '../components/boot.php'?> 
+        <?php require_once '../components/bootcss.php'?>
+        <link href="components/style.css" rel="stylesheet" type="text/css">
     </head>
-    <body>
-        <div class="container">
-            <div class="mt-3 mb-3">
+<body class="d-flex flex-column min-vh-100 bg-white"> <!-- Soome stuff for footer handling-->
+    <div class="container">
+        <div class="mt-3 mb-3">
                 <h1>Update request response</h1>
-            </div>
-            <div class="alert alert-<?php echo $class;?>" role="alert">
-                <p><?php echo ($message) ?? ''; ?></p>
-                <p><?php echo ($uploadError) ?? ''; ?></p>
-                <a href='../update.php?ISBN=<?=$ISBN;?>'><button class="btn btn-warning" type='button'>Back</button></a>
-                <a href='../index.php'><button class="btn btn-success" type='button'>Home</button></a>
-            </div>
         </div>
-    </body>
+        <div class="alert alert-<?php echo $class;?>" role="alert">
+            <p><?php echo ($message) ?? ''; ?></p>
+            <p><?php echo ($uploadError) ?? ''; ?></p>
+            <a href='../update.php?id=<?=$id;?>'><button class="btn btn-warning" type='button'>Back</button></a>
+            <a href='../index.php'><button class="btn btn-success" type='button'>Home</button></a>
+        </div>
+    </div>
+    <!-- Keep Footer down! -->
+    <?php require_once '../components/footer.php' ?>
+    <!-- Bootstrap JS -->
+    <?php require_once '../components/bootjs.php'?>
+</body>
 </html>
