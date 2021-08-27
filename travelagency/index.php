@@ -21,7 +21,9 @@ if($n  > 0) {
         <div class='col'>
             <div class='card h-100'>
                 <div class='card-header h5 text-center'>$row[location_name]</div>
-                <img src='pictures/$row[picture]' class='img-fluid d-none d-md-inline' alt='$row[location_name]'>
+                <a href='details.php?id=$row[id]'>
+                    <img src='pictures/$row[picture]' class='img-fluid w-100 d-none d-md-inline' alt='$row[location_name]'>
+                </a>
                 <div class='card-body d-flex flex-column justify-content-evenly'>
                     <p class='card-text text-center'><q>$row[description]</q></p>
                     <p class='card-text text-center'>Price: $row[price]&euro;</p>
