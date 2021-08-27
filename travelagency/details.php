@@ -14,7 +14,7 @@ if ($_GET['id']) {
         $longitude = $data['longitude']; 
         $latitude = $data['latitude']; 
         $picture = $data["picture"];
-        echo $longitude." ".$latitude;
+        echo $latitude." ".$longitude." ";
 
     } else {
         header("location: error.php");
@@ -32,20 +32,22 @@ if ($_GET['id']) {
         <?php require_once 'components/bootcss.php'?>
         <link href="components/style.css" rel="stylesheet" type="text/css">
         <style>
-            th, td {text-align: left;}
-        </style>
+            th, td {
+                text-align: left;
+            }
 
-    <script>
-        var map;
-        function initMap() {
-            var location = {lat: <?php echo $latitude ?>, lng: <?php echo $longitude ?> };
-            map = new google.maps.Map(document.getElementById('map'), {center: location,zoom: 2});
-            var pinpoint = new google.maps.Marker({position: location, map: map});
-        }
-    </script>          
+            html, body {
+                height: 100%;
+            }
+
+            #map {
+                height: 90%;
+            }
+        </style>         
     </head>
-    <body>
-        <fieldset class="mt-2 mb-3">
+
+<body>
+    <fieldset class="mt-2 mb-3">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <h2 class="text-center">Show "<?php echo $location_name ?>" Data</h2>
                 <img class='img-fluid img-thumbnail m-2' src='pictures/<?php echo $picture ?>' alt="<?php echo $title ?>">
@@ -71,13 +73,23 @@ if ($_GET['id']) {
             </div>
             <a href= "index.php"><button class="btn btn-warning text-center" type="button"><< Go Back</button></a>
 
-        </fieldset>
-        <div id="map"></div>
-        <?php require_once 'components/footer.php'?>
+    </fieldset>
+    <div id="map" class="mx-auto my-2"></div>
+
+
+    <?php require_once 'components/footer.php'?>
     
     <?php require_once 'components/bootjs.php'?>
     <!-- MAPS PART -->
-  
+    <script>
+            var map;
+            function initMap() {
+                var var_location = {lat: <?php echo $latitude ?>, lng: <?php echo $longitude ?>};
+                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 8});
+                var pinpoint = new google.maps.Marker({position: var_location,map: map});
+            }
+    </script>  
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtjaD-saUZQ47PbxigOg25cvuO6_SuX3M&callback=initMap" async defer></script>
     </body>
 </html>
