@@ -5,12 +5,12 @@ require_once 'file_upload.php';
 $TABLE = $_SESSION["TABLE"];
 
 if ($_POST) {   
-    $location_name = $_POST["location_name"];
-    $price = $_POST["price"];
-    $description = $_POST["description"];
-    $location_name = $_POST["location_name"];
-    $latitude = $_POST["latitude"];
-    $longitude = $_POST["longitude"];
+    $location_name = CleanInput($_POST["location_name"]);
+    $price = CleanInput($_POST["price"]);
+    $description = CleanInput($_POST["description"]);
+    $location_name = CleanInput($_POST["location_name"]);
+    $latitude = CleanInput($_POST["latitude"]);
+    $longitude = CleanInput($_POST["longitude"]);
     //this function exists in the service file upload.
     $picture = file_upload($_FILES["image"]);
     $uploadError = '';

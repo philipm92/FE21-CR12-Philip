@@ -124,7 +124,7 @@ if ($_GET['id']) {
             var map;
             function initMap() {
                 var var_location = {lat: <?php echo $latitude ?>, lng: <?php echo $longitude ?>};
-                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 16});
+                map = new google.maps.Map(document.getElementById('map'), {center: var_location, zoom: 18});
                 var pinpoint = new google.maps.Marker({position: var_location,map: map, title:"<?php echo $location_name ?>"});
                 //console.log(map.setCenter(var_location));
             }
