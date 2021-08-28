@@ -40,7 +40,6 @@ if($n  > 0) {
     }
     $cards_string .= $card;
 } 
-#else $tbody_string =  "<tr><td colspan='".(count($data_head)+1)."'><center>No Data Available </center></td></tr>";
 
 
 $db->close();
@@ -64,7 +63,7 @@ $db->close();
             <a href= "apidata.php?id=ALL"><button class='btn btn-primary my-2' type="button" >Show API</button></a>
         </div>
         <h2 class="text-center mt-3 mt-md-4 mb-2 mb-mb-3">Travel Location</h2>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 g-lg-2 w-75 mx-auto">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 w-75 mx-auto mt-1 mt-md-0 mb-4 ">
             <?= $cards_string ?>
         </div>
     </div>
