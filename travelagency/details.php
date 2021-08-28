@@ -15,6 +15,7 @@ if ($_GET['id']) {
         $longitude = $data['longitude']; 
         $latitude = $data['latitude']; 
         $picture = $data["picture"];
+        $price_formated = ($price == (int)$price) ? (int)$price : (float)$price;
     } else {
         header("location: error.php");
     }
@@ -41,6 +42,7 @@ if ($_GET['id']) {
             }
 
             #map {
+                margin: 0 auto;
                 width: 75vw;
                 height: 50%;
             }
@@ -68,7 +70,7 @@ if ($_GET['id']) {
 
                     <tr>
                         <th>Price</th>
-                        <td><?php echo $price."&euro;" ?></td>
+                        <td><?php echo (($price_formated===0) ? "<em><strong>*FREE*</strong></em>" : "$price_formated&euro;") ?></td>
                     </tr>
                     
                     <tr>
