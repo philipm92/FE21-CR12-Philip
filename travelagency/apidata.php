@@ -39,4 +39,4 @@ function response($status,$status_message,$data){
  
     // Outputting JSON to the client
     echo $json_response;
- }
+}

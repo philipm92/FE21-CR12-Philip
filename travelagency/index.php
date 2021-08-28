@@ -9,7 +9,7 @@ $result = $db->query($sql);
 $n = $result->numRows();
 $rows = $result->fetchAll();
 $query_data = GetQueryData($rows); // testing new function, though not really necessary
-
+#echo debug_to_console(0==0.00)." ".debug_to_console("0"=="0.00");
 
 
 $cards_string = ''; //this variable will hold the data for the cards
@@ -17,6 +17,7 @@ $data_body = $query_data->body;
 if($n  > 0) {
     $card = '';
     foreach($data_body as $row) {
+        $price_formated = ($row["price"] == (int)$row["price"]) ? (int)$row["price"] : (float)$row["price"];
         $card .= "
         <div class='col'>
             <div class='card h-100'>
@@ -26,12 +27,12 @@ if($n  > 0) {
                 </a>
                 <div class='card-body d-flex flex-column justify-content-evenly'>
                     <p class='card-text text-center'><q>$row[description]</q></p>
-                    <p class='card-text text-center'>Price: $row[price]&euro;</p>
-                    <div class='text-center'><a href='details.php?id=$row[id]'><button class='btn btn-success btn-sm' type='button'>More info</button></a></div>
+                    <p class='card-text text-center'>".(($price_formated===0) ? "<em><strong>*FREE*</strong></em>" : "Price: $price_formated&euro;")."</p>
+                    <div class='text-center'><a href='details.php?id=$row[id]'><button class='btn btn-success btn-sm' type='button'><i class='fas fa-info-circle'></i> More info</button></a></div>
                 </div>
                 <div class='card-footer h6 text-center text-muted'>
-                    <a href='update.php?id=$row[id]'><button class='btn btn-primary btn-sm m-1' type='button'>Edit</button></a>
-                    <a href='delete.php?id=$row[id]'><button class='btn btn-danger btn-sm m-1' type='button'>Delete</button></a>
+                    <a href='update.php?id=$row[id]'><button class='btn btn-primary btn-sm m-1' type='button'><i class='fas fa-edit'></i> Edit</button></a>
+                    <a href='delete.php?id=$row[id]'><button class='btn btn-danger btn-sm m-1' type='button'><i class='fas fa-trash-alt'></i> Delete</button></a>
                 </div>                                   
             </div>
         </div>         

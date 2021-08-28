@@ -40,7 +40,7 @@ if ($_GET['id']) {
         </div>
             <form action="actions/a_update.php"  method="post" enctype="multipart/form-data">
                 <div class="table-responsive mx-auto w-75">
-                    <table class='table table-hover table-striped mx-auto'>
+                    <table class='table table-sm table-hover table-striped mx-auto'>
                         <tr>
                             <div class="form-floating mb-3">
                                 <input type="text" name="location_name" class="form-control" id="floatingLName" placeholder="Location Name" value="<?php echo $location_name ?>" />
@@ -57,7 +57,7 @@ if ($_GET['id']) {
 
                         <tr>
                             <div class="form-floating mb-3">
-                                <input type="number" step="1" name="price" class="form-control" id="floatingPrice" placeholder="Price" value="<?php echo $price ?>" />
+                                <input type="number" step=0.01 name="price" class="form-control" id="floatingPrice" placeholder="Price" value="<?php echo $price ?>" />
                                 <label for="floatingPrice">Price</label>
                             </div>
                         </tr>

@@ -14,7 +14,7 @@
         <form action="actions/a_create.php" method= "post" enctype="multipart/form-data">
             <!-- `location_name`, `price`, `description`, `longitude`, `latitude` -->
             <div class="table-responsive mx-auto w-75">
-                <table class='table table-hover table-striped mx-auto'>
+                <table class='table table-sm table-hover table-striped mx-auto'>
                     <tr>
                         <div class="form-floating mb-3">
                             <input type="text" name="location_name" class="form-control" id="floatingLName" placeholder="Location Name">
@@ -31,7 +31,7 @@
 
                     <tr>
                         <div class="form-floating mb-3">
-                            <input type="number" step="1" name="price" class="form-control" id="floatingPrice" placeholder="Price">
+                            <input type="number" step=0.01 name="price" class="form-control" id="floatingPrice" placeholder="Price">
                             <label for="floatingPrice">Price</label>
                         </div>
                     </tr>
@@ -54,7 +54,7 @@
                         <input class='form-control' type="file" name="image" id="floatingImg" />
                     </tr>
                 </table>
-                <div class="text-center"><button class='btn btn-success' type="submit">Insert Media</button></div>   
+                <div class="text-center my-2"><button class='btn btn-success' type="submit">Insert Media</button></div>   
             </div>
         </form>
     </fieldset>

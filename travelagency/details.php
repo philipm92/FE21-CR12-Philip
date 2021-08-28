@@ -15,7 +15,6 @@ if ($_GET['id']) {
         $longitude = $data['longitude']; 
         $latitude = $data['latitude']; 
         $picture = $data["picture"];
-
     } else {
         header("location: error.php");
     }
@@ -56,7 +55,7 @@ if ($_GET['id']) {
                 <img class='img-fluid img-thumbnail m-2' src='pictures/<?php echo $picture ?>' alt="<?php echo $title ?>">
             </div>
             <div class="table-responsive mx-auto w-75">
-                <table class='table table-hover table-striped mx-auto'>
+                <table class='table table-sm table-hover table-striped mx-auto'>
                     <tr>
                         <th>Location Name</th>
                         <td><?php echo $location_name ?></td>
@@ -69,7 +68,7 @@ if ($_GET['id']) {
 
                     <tr>
                         <th>Price</th>
-                        <td><?php echo $price ?>&euro;</td>
+                        <td><?php echo $price."&euro;" ?></td>
                     </tr>
                     
                     <tr>
